@@ -10,4 +10,13 @@
 .vscode/
 
 # Dependency directories
-node_modules
+node_modules/
+
+# Logs
+npm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# NPM private repo config
+.npmrc
