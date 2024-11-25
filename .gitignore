@@ -1,7 +1,10 @@
-### OSX ###
+# MacOS
 *.DS_Store
 .AppleDouble
 .LSOverride
 
 # Thumbnails
 ._*
+
+# Dependency directories
+node_modules
