@@ -21,4 +21,11 @@ describe('users', () => {
     expect(response.type).toEqual('application/json');
     expect(response.body.user.name).toEqual('Alice');
   });
+
+  it ('should create a user', async () => {
+    const response = await request(server)
+      .post(`/users`)
+      .send({ name: 'John Doe' });
+    expect(response.status).toEqual(201);
+  });
 });
