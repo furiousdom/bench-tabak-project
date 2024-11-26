@@ -12,10 +12,12 @@
   "description": "",
   "dependencies": {
     "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
     "koa-router": "^13.0.1"
   },
   "devDependencies": {
     "@types/koa": "^2.15.0",
+    "@types/koa-bodyparser": "^4.3.12",
     "@types/koa-router": "^7.4.8",
     "@types/node": "^22.9.3",
     "ts-node": "^10.9.2",
