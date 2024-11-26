@@ -36,3 +36,13 @@ router.get('/users/:id', (ctx: Context) => {
     ctx.body = { user };
   }
 });
+
+router.post('/users', async (ctx: Context) => {
+  try {
+    ctx.status = 201;
+    ctx.body = ctx.request.body;
+  } catch (err) {
+    ctx.status = 400;
+    ctx.body = { error: 'Bad request' };
+  }
+});
