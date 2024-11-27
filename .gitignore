@@ -20,3 +20,6 @@ npm-debug.log*
 
 # NPM private repo config
 .npmrc
+
+# Compile output
+dist/
