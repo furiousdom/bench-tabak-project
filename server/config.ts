@@ -1,30 +1,12 @@
 import dotenv from 'dotenv';
+import { z } from 'zod';
 
-interface ENV {
-  NODE_ENV: string | undefined;
-  PORT: number | undefined;
-}
-
-type Config = ENV;
-
-const getConfig = (): ENV => {
-  return {
-    NODE_ENV: process.env.NODE_ENV,
-    PORT: process.env.PORT ? Number(process.env.PORT) : undefined
-  };
-};
-
-const getSanitzedConfig = (config: ENV): Config => {
-  for (const [key, value] of Object.entries(config)) {
-    if (value === undefined) {
-      throw new Error(`Missing key ${key} in config.env`);
-    }
-  }
-  return config as Config;
-};
+const envSchema = z.object({
+  NODE_ENV: z.string(),
+  PORT: z.coerce.number().positive()
+});
 
 dotenv.config();
-const config = getConfig();
-const sanitizedConfig = getSanitzedConfig(config);
+const config = envSchema.parse(process.env);
 
-export default sanitizedConfig;
+export default config;
