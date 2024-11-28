@@ -10,15 +10,7 @@ interface ENV {
   DB_PASSWORD: string | undefined;
 }
 
-interface Config {
-  NODE_ENV: string;
-  PORT: number;
-  DB_HOST: string | undefined;
-  DB_PORT: number | undefined;
-  DB_NAME: string | undefined;
-  DB_USER: string | undefined;
-  DB_PASSWORD: string | undefined;
-}
+type Config = ENV;
 
 const getConfig = (): ENV => {
   return {
