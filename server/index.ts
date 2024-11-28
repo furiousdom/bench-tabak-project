@@ -1,8 +1,9 @@
 import bodyParser from 'koa-bodyparser';
+import config from './config';
 import Koa from 'koa';
 import { router as userRouter } from './user/index';
 
-const PORT = 3000;
+const { PORT } = config;
 
 const app = new Koa();
 
