@@ -5,10 +5,7 @@ interface ENV {
   PORT: number | undefined;
 }
 
-interface Config {
-  NODE_ENV: string;
-  PORT: number;
-}
+type Config = ENV;
 
 const getConfig = (): ENV => {
   return {
