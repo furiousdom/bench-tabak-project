@@ -15,7 +15,7 @@ describe('users', () => {
   });
 
   it ('should return a requested user', async () => {
-    const userId = 1
+    const userId = 1;
     const response = await request(server).get(`/users/${userId}`);
     expect(response.status).toEqual(200);
     expect(response.type).toEqual('application/json');
