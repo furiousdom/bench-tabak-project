@@ -5,7 +5,7 @@ const envSchema = z.object({
   NODE_ENV: z.string(),
   PORT: z.coerce.number().positive(),
   DATABASE_HOST: z.string(),
-  DATABASE_PORT: z.number(),
+  DATABASE_PORT: z.coerce.number().positive(),
   DATABASE_NAME: z.string(),
   DATABASE_USER: z.string(),
   DATABASE_PASSWORD: z.string()
