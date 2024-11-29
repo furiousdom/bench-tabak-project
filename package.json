@@ -36,6 +36,12 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
+  "mikro-orm": {
+    "configPaths": [
+      "./server/database/config.ts",
+      "./dist/database/config.js"
+    ]
+  },
   "jest": {
     "verbose": true,
     "collectCoverage": true,

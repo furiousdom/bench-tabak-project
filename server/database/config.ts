@@ -1,5 +1,5 @@
 import { Options, PostgreSqlDriver } from '@mikro-orm/postgresql';
-import config from './server/config';
+import config from '../config';
 
 const dbConfig: Options = {
   driver: PostgreSqlDriver,
