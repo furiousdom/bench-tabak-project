@@ -26,3 +26,7 @@ dist/
 
 #Test coverage
 coverage/
+
+# Configuration
+.env*
+!.env*.example
