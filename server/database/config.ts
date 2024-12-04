@@ -10,6 +10,7 @@ const dbConfig: Options = {
   user: config.DATABASE_USER,
   password: config.DATABASE_PASSWORD,
   entities: ['**/*.entity.js'],
+  entitiesTs: ['**/*.entity.ts'],
   extensions: [Migrator],
   migrations: {
     path: 'dist/database/migrations',
