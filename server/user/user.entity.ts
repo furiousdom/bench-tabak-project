@@ -8,10 +8,9 @@ export class User {
   @Property()
   email!: string;
 
-  // TODO: Add deletedAt and then uncomment this.
-  // @Property({ onCreate: () => new Date() })
-  // createdAt: Date = new Date();
+  @Property({ onCreate: () => new Date() })
+  createdAt: Date = new Date();
 
-  // @Property({ onUpdate: () => new Date() })
-  // updatedAt: Date = new Date();
+  @Property({ onUpdate: () => new Date() })
+  updatedAt: Date = new Date();
 }

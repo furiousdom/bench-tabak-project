@@ -7,7 +7,9 @@ export class CreateUser extends Migration {
     const query = `
       CREATE TABLE "${TABLE_NAME}" (
         id integer PRIMARY KEY,
-        email varchar(512) NOT NULL UNIQUE
+        email varchar(512) NOT NULL UNIQUE,
+        created_at timestamp,
+        updated_at timestamp
       );`;
     this.addSql(query);
   }
