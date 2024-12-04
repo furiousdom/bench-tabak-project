@@ -1,5 +1,6 @@
 import { Options, PostgreSqlDriver } from '@mikro-orm/postgresql';
 import config from '../config';
+import { Migrator } from '@mikro-orm/migrations';
 
 const dbConfig: Options = {
   driver: PostgreSqlDriver,
@@ -8,7 +9,12 @@ const dbConfig: Options = {
   dbName: config.DATABASE_NAME,
   user: config.DATABASE_USER,
   password: config.DATABASE_PASSWORD,
-  entities: ['**/*.entity.ts']
+  entities: ['**/*.entity.js'],
+  extensions: [Migrator],
+  migrations: {
+    path: 'dist/database/migrations',
+    pathTs: 'server/database/migrations'
+  }
 };
 
 export default dbConfig;
