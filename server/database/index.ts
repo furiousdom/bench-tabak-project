@@ -1,8 +1,25 @@
-import { MikroORM } from '@mikro-orm/core';
 import mikroOrmConfig from './config';
+import { EntityManager, EntityRepository, MikroORM } from '@mikro-orm/postgresql';
+import { User } from '../user/user.entity';
 
-export const initDatabase = async (): Promise<MikroORM> => {
+export interface Services {
+  orm: MikroORM;
+  em: EntityManager;
+  user: EntityRepository<User>;
+}
+
+let cache: Services;
+
+export async function getDatabase(): Promise<Services> {
+  if (cache) {
+    return cache;
+  }
+
   const orm = await MikroORM.init(mikroOrmConfig);
-  console.log('Database connection established');
-  return orm;
-};
+
+  return cache = {
+    orm,
+    em: orm.em,
+    user: orm.em.getRepository(User)
+  };
+}

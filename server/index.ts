@@ -1,5 +1,5 @@
-import { initDatabase } from './database/index';
+import { getDatabase } from './database/index';
 import runApp from './app';
 
-initDatabase()
+getDatabase()
   .then(() => runApp());
