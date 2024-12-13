@@ -13,7 +13,7 @@ interface CreateUserRequest {
 router.get('/users', async (ctx: Context) => {
   const db = await getDatabase();
   const em = db.em.fork();
-  const users = await em.find('User', {});
+  const users = await em.find(User, {});
   ctx.body = {
     users
   }
@@ -27,7 +27,7 @@ router.get('/users/:id', async (ctx: Context) => {
   let user = null;
 
   try {
-    user = await em.findOne('User', { id });
+    user = await em.findOne(User, { id });
   } catch (err) {
     ctx.status = 400;
     ctx.body = { error: 'User does not exist' };
