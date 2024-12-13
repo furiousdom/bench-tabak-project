@@ -55,9 +55,7 @@ router.post('/users', async (ctx: Context) => {
   }
 
   try {
-    const user = new User();
-    user.id = id;
-    user.email = email;
+    const user = new User(id, email);
 
     await em.persistAndFlush(user);
 
