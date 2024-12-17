@@ -1,14 +1,14 @@
 import bodyParser from 'koa-bodyparser';
 import config from './config';
 import Koa from 'koa';
-import { router as userRouter } from './user/index';
+import router from './router';
 
 const { PORT } = config;
 
 const app = new Koa();
 
 app.use(bodyParser());
-app.use(userRouter.routes());
+app.use(router.routes());
 
 function runApp(): Promise<void> {
   return new Promise((resolve, reject) => {
