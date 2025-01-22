@@ -1,9 +1,13 @@
 import Router from 'koa-router';
-import userController from './user.controller';
+import { UserController } from './user.controller';
 
-export const router = new Router();
+export function createUserRouter(ctrl: UserController) {
+  const router = new Router();
 
-router
-  .get('/users', userController.list)
-  .get('/users/:id', userController.get)
-  .post('/users', userController.create);
+  router
+    .get('/users', ctrl.list)
+    .get('/users/:id', ctrl.get)
+    .post('/users', ctrl.create);
+
+  return router;
+}
