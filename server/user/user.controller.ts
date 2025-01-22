@@ -1,71 +1,43 @@
-import { Context } from 'koa';
-import { getDatabase } from '../database';
-import { User } from './user.entity';
+import Koa from 'koa';
+import { UserService } from './user.service';
 
 interface CreateUserRequest {
   email: string;
   id: number;
 }
 
-async function list(ctx: Context) {
-  const db = await getDatabase();
-  const em = db.em.fork();
-  const users = await em.find(User, {});
-  ctx.body = {
-    users
-  }
-}
+export class UserController {
+  private userService: UserService;
 
-async function get(ctx: Context) {
-  const db = await getDatabase();
-  const em = db.em.fork();
-
-  const { id } = ctx.params;
-  let user = null;
-
-  try {
-    user = await em.findOne(User, { id });
-  } catch (err) {
-    ctx.status = 400;
-    ctx.body = { error: 'User does not exist' };
+  constructor(userService: UserService) {
+    this.userService = userService;
   }
 
-  if (!user) {
-    ctx.status = 404;
-    ctx.body = { error: 'User not found' };
-  } else {
-    ctx.body = { user };
-  }
-}
-
-async function create(ctx: Context) {
-  const db = await getDatabase();
-  const em = db.em.fork();
-
-  const body = ctx.request.body as CreateUserRequest;
-  const { email, id } = body;
-
-  if (!email || !id) {
-    ctx.status = 400;
-    ctx.body = { error: 'Both email and id are required' };
-    return;
+  async list(ctx: Koa.Context): Promise<void> {
+    ctx.body = await this.userService.getAll();
   }
 
-  try {
-    const user = new User(id, email);
-
-    await em.persistAndFlush(user);
-
-    ctx.status = 201;
-    ctx.body = user;
-  } catch (err) {
-    ctx.status = 500;
-    ctx.body = { error: 'Failed to create user' };
+  async get(ctx: Koa.Context): Promise<void> {
+    const id = parseInt(ctx.params.id, 10);
+    const user = await this.userService.getById(id);
+    if (user) {
+      ctx.body = user;
+    } else {
+      ctx.status = 404;
+      ctx.body = { message: 'User not found' };
+    }
   }
-}
 
-export default {
-  list,
-  get,
-  create
+  async create(ctx: Koa.Context): Promise<void> {
+    const body = ctx.request.body as CreateUserRequest;
+    const { email, id } = body;
+    try {
+      const user = await this.userService.create(id, email);
+      ctx.status = 201;
+      ctx.body = user;
+    } catch (err) {
+      ctx.status = 500;
+      ctx.body = { error: 'Failed to create user' };
+    }
+  }
 }
