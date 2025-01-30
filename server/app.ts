@@ -1,5 +1,4 @@
 import bodyParser from 'koa-bodyparser';
-import config from './config';
 import { createRouter } from './router';
 import { createUserRouter } from './user';
 import Koa from 'koa';
@@ -8,9 +7,7 @@ import { UserController } from './user/user.controller';
 import { UserRepository } from './user/user.repository';
 import { UserService } from './user/user.service';
 
-const { PORT } = config;
-
-function runApp(dbServices: DbServices): Promise<void> {
+function setupApp(dbServices: DbServices): Koa {
   const userRepository = new UserRepository(dbServices.em);
   const userService = new UserService(userRepository);
   const userController = new UserController(userService);
@@ -23,11 +20,7 @@ function runApp(dbServices: DbServices): Promise<void> {
   app.use(bodyParser());
   app.use(appRouter.routes());
 
-  return new Promise((resolve, reject) => {
-    app
-      .listen(PORT, () => console.log(`Running on http://localhost:${PORT}/`))
-      .on('error', err => err ? reject(err) : resolve());
-  });
+  return app;
 }
 
-export default runApp;
+export default setupApp;

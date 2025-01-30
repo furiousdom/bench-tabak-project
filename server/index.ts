@@ -1,5 +1,9 @@
+import config from './config';
 import { getDatabase } from './database/index';
-import runApp from './app';
+import setupApp from './app';
+
+const { PORT } = config;
 
 getDatabase()
-  .then(dbServices => runApp(dbServices));
+  .then(dbServices => setupApp(dbServices))
+  .then(app => app.listen(PORT, () => console.log(`Running on http://localhost:${PORT}/`)));
