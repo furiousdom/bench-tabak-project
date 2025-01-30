@@ -1,5 +1,6 @@
-import { EntityManager } from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { User } from './user.entity';
+import { Workable } from '../database/helpers';
 
 export class UserRepository {
   private em: EntityManager;
@@ -8,8 +9,13 @@ export class UserRepository {
     this.em = em;
   }
 
-  async findAll(): Promise<User[]> {
-    return this.em.find(User, {});
+  @Workable
+  async findAll(em?: EntityManager): Promise<User[]> {
+    // const em = this.em.fork();
+    return em!.find(User, {});
+    // const em = RequestContext.getEntityManager();
+    // if (!em) throw Error('Project is not set up correctly.');
+    // return em.find(User, {});
   }
 
   async findOne(id: number): Promise<User | null> {

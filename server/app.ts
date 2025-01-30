@@ -3,7 +3,6 @@ import config from './config';
 import { createRouter } from './router';
 import { createUserRouter } from './user';
 import Koa from 'koa';
-import { RequestContext } from '@mikro-orm/core';
 import { Services as DbServices } from './database';
 import { UserController } from './user/user.controller';
 import { UserRepository } from './user/user.repository';
@@ -23,8 +22,6 @@ function runApp(dbServices: DbServices): Promise<void> {
 
   app.use(bodyParser());
   app.use(appRouter.routes());
-
-  app.use((_, next) => RequestContext.create(dbServices.em, next));
 
   return new Promise((resolve, reject) => {
     app
