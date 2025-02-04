@@ -9,7 +9,8 @@ export class UserRepository {
   }
 
   async findAll(): Promise<User[]> {
-    return this.em.find(User, {});
+    const em = this.em.fork();
+    return em.find(User, {});
   }
 
   async findOne(id: number): Promise<User | null> {

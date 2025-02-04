@@ -13,7 +13,7 @@ export class UserController {
     this.userService = userService;
   }
 
-  async list(ctx: Koa.Context): Promise<void> {
+  list = async (ctx: Koa.Context): Promise<void> => {
     ctx.body = await this.userService.getAll();
   }
 
