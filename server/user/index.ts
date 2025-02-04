@@ -1,13 +1,18 @@
-import Router from 'koa-router';
+import Bottle from 'bottlejs';
+import { createUserRouter } from './user.router';
+import { Services as DbServices } from '../database';
 import { UserController } from './user.controller';
+import { UserRepository } from './user.repository';
+import { UserService } from './user.service';
 
-function createUserRouter(ctrl: UserController) {
-  const router = new Router();
-
-  return router
-    .get('/users', ctrl.list)
-    .get('/users/:id', ctrl.get)
-    .post('/users', ctrl.create);
+function setupModule(bottle: Bottle, dbServices: DbServices) {
+  bottle.factory('UserRepository', () => new UserRepository(dbServices.orm.em));
+  bottle.factory('UserService', () => new UserService(bottle.container.UserRepository));
+  bottle.factory('UserController', () => new UserController(bottle.container.UserService));
+  bottle.factory(
+    'UserRouter',
+    () => createUserRouter(bottle.container.UserController)
+  );
 }
 
-export { createUserRouter };
+export default setupModule;
