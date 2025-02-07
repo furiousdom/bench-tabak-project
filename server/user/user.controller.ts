@@ -1,3 +1,4 @@
+import autoBind from 'auto-bind';
 import Koa from 'koa';
 import { UserService } from './user.service';
 
@@ -11,9 +12,10 @@ export class UserController {
 
   constructor(userService: UserService) {
     this.userService = userService;
+    autoBind(this);
   }
 
-  list = async (ctx: Koa.Context): Promise<void> => {
+  async list(ctx: Koa.Context): Promise<void> {
     ctx.body = await this.userService.getAll();
   }
 
