@@ -1,18 +1,14 @@
 import Bottle from 'bottlejs';
 import { createUserRouter } from './user.router';
-import { Services as DbServices } from '../database';
 import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 
-function setupModule(bottle: Bottle, dbServices: DbServices) {
-  bottle.factory('UserRepository', () => new UserRepository(dbServices.orm.em));
-  bottle.factory('UserService', () => new UserService(bottle.container.UserRepository));
-  bottle.factory('UserController', () => new UserController(bottle.container.UserService));
-  bottle.factory(
-    'UserRouter',
-    () => createUserRouter(bottle.container.UserController)
-  );
+function setupModule(bottle: Bottle) {
+  bottle.factory('UserRepository', ({ DbServices }) => new UserRepository(DbServices.orm.em));
+  bottle.service('UserService', UserService, 'UserRepository');
+  bottle.service('UserController', UserController, 'UserService');
+  bottle.service('UserRouter', createUserRouter, 'UserController');
 }
 
 export default setupModule;

@@ -5,7 +5,9 @@ import setupUserModule from '../user';
 const bottle = new Bottle();
 
 async function setupDependencies(dbServices: DbServices) {
-  setupUserModule(bottle, dbServices);
+  bottle.factory('DbServices', () => dbServices);
+  setupUserModule(bottle);
+  return bottle;
 }
 
 export { bottle, setupDependencies };
