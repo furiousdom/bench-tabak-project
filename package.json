@@ -17,6 +17,7 @@
     "@mikro-orm/core": "^6.4.0",
     "@mikro-orm/migrations": "^6.4.0",
     "@mikro-orm/postgresql": "^6.4.0",
+    "auto-bind": "^5.0.1",
     "bottlejs": "^2.0.1",
     "dotenv": "^16.4.5",
     "koa": "^2.15.3",
