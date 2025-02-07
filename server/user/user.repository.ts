@@ -14,12 +14,14 @@ export class UserRepository {
   }
 
   async findOne(id: number): Promise<User | null> {
-    return this.em.findOne(User, { id });
+    const em = this.em.fork();
+    return em.findOne(User, { id });
   }
 
   async create(id: number, email: string): Promise<User> {
+    const em = this.em.fork();
     const user = new User(id, email);
-    await this.em.persistAndFlush(user);
+    await em.persistAndFlush(user);
     return user;
   }
 }
