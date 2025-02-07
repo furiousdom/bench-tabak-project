@@ -4,7 +4,7 @@ import { createRouter } from './router';
 import { Services as DbServices } from './database';
 import Koa from 'koa';
 
-async function setupApp(dbServices: DbServices): Promise<Koa> {
+function setupApp(dbServices: DbServices): Koa {
   setupDependencies(dbServices);
 
   const router = createRouter(bottle);
