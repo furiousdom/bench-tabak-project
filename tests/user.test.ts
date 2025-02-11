@@ -1,9 +1,16 @@
-import server from '../server';
+import serverPromise from '../server';
 import request from 'supertest';
+import http from 'http';
+
+let server: http.Server;
 
 afterEach(done => {
   server.close();
   done();
+});
+
+beforeAll(async () => {
+  server = await serverPromise;
 });
 
 describe('users', () => {
