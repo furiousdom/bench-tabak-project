@@ -4,6 +4,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "migration:create": "mikro-orm migration:create",
+    "migration:down": "mikro-orm migration:down",
+    "migration:generate": "mikro-orm migration:generate",
+    "migration:pending": "mikro-orm migration:pending",
+    "migration:up": "mikro-orm migration:up",
     "start": "node ./dist/index.js",
     "test": "NODE_ENV=test PORT=7890 jest",
     "test:watch": "npm run test -- --watchAll"
