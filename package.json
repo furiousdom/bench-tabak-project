@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "dev": "node --watch -r ts-node/register server/index.ts",
     "migration:create": "mikro-orm migration:create",
     "migration:down": "mikro-orm migration:down",
     "migration:generate": "mikro-orm migration:generate",
