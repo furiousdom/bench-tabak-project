@@ -50,31 +50,5 @@
       "./server/database/config.ts",
       "./dist/database/config.js"
     ]
-  },
-  "jest": {
-    "verbose": true,
-    "collectCoverage": true,
-    "modulePathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ],
-    "roots": [
-      "<rootDir>/tests"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }
