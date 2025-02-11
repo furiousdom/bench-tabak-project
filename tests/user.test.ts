@@ -5,12 +5,15 @@ import http from 'http';
 let server: http.Server;
 
 afterEach(done => {
-  server.close();
   done();
 });
 
 beforeAll(async () => {
   server = await serverPromise;
+});
+
+afterAll(() => {
+  server.close();
 });
 
 describe('users', () => {
