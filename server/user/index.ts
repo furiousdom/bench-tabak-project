@@ -1,68 +1,14 @@
-import { Context } from 'koa';
-import Router from 'koa-router';
-import { getDatabase } from '../database';
-import { User } from './user.entity';
+import Bottle from 'bottlejs';
+import { createUserRouter } from './user.router';
+import { UserController } from './user.controller';
+import { UserRepository } from './user.repository';
+import { UserService } from './user.service';
 
-export const router = new Router();
-
-interface CreateUserRequest {
-  email: string;
-  id: number;
+function setupModule(bottle: Bottle) {
+  bottle.factory('UserRepository', ({ DbServices }) => new UserRepository(DbServices.orm.em));
+  bottle.service('UserService', UserService, 'UserRepository');
+  bottle.service('UserController', UserController, 'UserService');
+  bottle.service('UserRouter', createUserRouter, 'UserController');
 }
 
-router.get('/users', async (ctx: Context) => {
-  const db = await getDatabase();
-  const em = db.em.fork();
-  const users = await em.find(User, {});
-  ctx.body = {
-    users
-  }
-});
-
-router.get('/users/:id', async (ctx: Context) => {
-  const db = await getDatabase();
-  const em = db.em.fork();
-
-  const { id } = ctx.params;
-  let user = null;
-
-  try {
-    user = await em.findOne(User, { id });
-  } catch (err) {
-    ctx.status = 400;
-    ctx.body = { error: 'User does not exist' };
-  }
-
-  if (!user) {
-    ctx.status = 404;
-    ctx.body = { error: 'User not found' };
-  } else {
-    ctx.body = { user };
-  }
-});
-
-router.post('/users', async (ctx: Context) => {
-  const db = await getDatabase();
-  const em = db.em.fork();
-
-  const body = ctx.request.body as CreateUserRequest;
-  const { email, id } = body;
-
-  if (!email || !id) {
-    ctx.status = 400;
-    ctx.body = { error: 'Both email and id are required' };
-    return;
-  }
-
-  try {
-    const user = new User(id, email);
-
-    await em.persistAndFlush(user);
-
-    ctx.status = 201;
-    ctx.body = user;
-  } catch (err) {
-    ctx.status = 500;
-    ctx.body = { error: 'Failed to create user' };
-  }
-});
+export default setupModule;

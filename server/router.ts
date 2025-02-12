@@ -1,8 +1,12 @@
+import Bottle from 'bottlejs';
 import Router from 'koa-router';
-import { router as userRouter } from './user/index';
 
-const router = new Router();
+function createRouter(bottle: Bottle): Router {
+  const router = new Router();
 
-router.use(userRouter.routes());
+  router.use(bottle.container.UserRouter.routes());
 
-export default router;
+  return router;
+}
+
+export { createRouter };
