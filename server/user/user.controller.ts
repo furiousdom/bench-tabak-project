@@ -38,8 +38,8 @@ export class UserController {
       ctx.status = 201;
       ctx.body = user;
     } catch (err) {
-      ctx.status = 500;
-      ctx.body = { error: 'Failed to create user' };
+      ctx.status = 400;
+      ctx.body = { error: 'Bad Request. Failed to create user' };
     }
   }
 }
