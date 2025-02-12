@@ -19,3 +19,7 @@ FROM base AS configure
 WORKDIR /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 COPY --chown=node:node --from=install /usr/src/app/node_modules ./node_modules
+
+FROM configure AS run
+USER node
+CMD [ "node", "dist/index.js" ]
