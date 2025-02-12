@@ -14,3 +14,8 @@ FROM node:22-bookworm@sha256:5145c882f9e32f07dd7593962045d97f221d57a1b609f5bf7a8
 WORKDIR /usr/src/app
 COPY package*.json .
 RUN npm ci --omit=dev
+
+FROM base AS configure
+WORKDIR /usr/src/app
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=install /usr/src/app/node_modules ./node_modules
