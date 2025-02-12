@@ -9,3 +9,8 @@ RUN npm ci
 COPY ./server ./server
 COPY tsconfig.json .
 RUN npm run build
+
+FROM node:22-bookworm@sha256:5145c882f9e32f07dd7593962045d97f221d57a1b609f5bf7a807eb89deff9d6 AS install
+WORKDIR /usr/src/app
+COPY package*.json .
+RUN npm ci --omit=dev
