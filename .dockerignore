@@ -1,0 +1,10 @@
+.dockerignore
+.env*
+.git
+.gitignore
+.nvmrc
+.vscode
+coverage
+dist
+node_modules
+*.md
