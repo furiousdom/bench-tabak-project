@@ -16,14 +16,15 @@ export class UserController {
   }
 
   async list(ctx: Koa.Context): Promise<void> {
-    ctx.body = await this.userService.getAll();
+    const users = await this.userService.getAll();
+    ctx.body = { users };
   }
 
   async get(ctx: Koa.Context): Promise<void> {
     const id = parseInt(ctx.params.id, 10);
     const user = await this.userService.getById(id);
     if (user) {
-      ctx.body = user;
+      ctx.body = { user };
     } else {
       ctx.status = 404;
       ctx.body = { message: 'User not found' };
@@ -36,7 +37,7 @@ export class UserController {
     try {
       const user = await this.userService.create(id, email);
       ctx.status = 201;
-      ctx.body = user;
+      ctx.body = { user };
     } catch (err) {
       ctx.status = 400;
       ctx.body = { error: 'Bad Request. Failed to create user' };
